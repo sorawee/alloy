@@ -1,0 +1,32 @@
+$ time java -cp . AlloyRunner test-case.als 1 0
+=========== Parsing+Typechecking test-case.als =============
+============ Command Check check$1 for 8 but 7 Vertex: ============
+============= Instance 1 =============
+---OUTCOME---
+Unsatisfiable.
+
+java -cp . AlloyRunner test-case.als 1 0  13.65s user 0.08s system 123% cpu 11.140 total
+$ time java -cp . AlloyRunner test-case.als 1 0
+=========== Parsing+Typechecking test-case.als =============
+============ Command Check check$1 for 8 but 7 Vertex: ============
+============= Instance 1 =============
+---OUTCOME---
+Unsatisfiable.
+
+java -cp . AlloyRunner test-case.als 1 0  13.65s user 0.07s system 125% cpu 10.953 total
+$ time java -cp . AlloyRunner test-case.als 1 4
+=========== Parsing+Typechecking test-case.als =============
+============ Command Check check$1 for 8 but 7 Vertex: ============
+============= Instance 1 =============
+---OUTCOME---
+Unsatisfiable.
+
+java -cp . AlloyRunner test-case.als 1 4  2.19s user 0.03s system 263% cpu 0.842 total
+$ time java -cp . AlloyRunner test-case.als 1 4
+=========== Parsing+Typechecking test-case.als =============
+============ Command Check check$1 for 8 but 7 Vertex: ============
+============= Instance 1 =============
+---OUTCOME---
+Unsatisfiable.
+
+java -cp . AlloyRunner test-case.als 1 4  2.20s user 0.05s system 257% cpu 0.873 total

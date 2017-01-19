@@ -26,7 +26,7 @@ import edu.mit.csail.sdg.alloy4compiler.translator.TranslateAlloyToKodkod;
 
 public class AlloyRunner {
     /*
-     * Usage: AlloyRunner <file.als> num-instances
+     * Usage: AlloyRunner <file.als> num-instances seed
      */
 
     public static void main(String[] args) throws Exception {

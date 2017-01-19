@@ -437,22 +437,19 @@ public final class A4Solution {
     }
 
     private String getNewLabel(String label) {
-      if (label.startsWith("this/")) {
-        if (mapnames.containsKey(label)) {
-          return mapnames.get(label);
-        }
-        String genname = "";
-        do {
-          long val = rnd.nextLong();
-          if (val < 0) val *= -1;
-          genname = String.valueOf(val);
-        } while (setnames.contains(genname));
-
-        String newlabel = "this/" + genname + "_" + label;
-        mapnames.put(label, newlabel);
-        return newlabel;
+      if (mapnames.containsKey(label)) {
+        return mapnames.get(label);
       }
-      return label;
+      String genname = "";
+      do {
+        long val = rnd.nextLong();
+        if (val < 0) val *= -1;
+        genname = String.valueOf(val);
+      } while (setnames.contains(genname));
+
+      String newlabel = genname + "_" + label;
+      mapnames.put(label, newlabel);
+      return newlabel;
     }
 
     /** Add a new sig to this solution and associate it with the given expression (and if s.isTopLevel then add this expression into Sig.UNIV).

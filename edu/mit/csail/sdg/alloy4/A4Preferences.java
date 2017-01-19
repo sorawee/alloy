@@ -269,6 +269,9 @@ public class A4Preferences {
    /** True if Alloy Analyzer should not report models that overflow. */
    public static final BooleanPref NoOverflow = new BooleanPref("NoOverflow", "Prevent overflows", true);
 
+   /** The seed value for name generation */
+   public static final IntChoicePref Seed = new IntChoicePref("Seed", "Seed for name generations", Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15), 0);
+
    /** The latest X coordinate of the Alloy Analyzer's main window. */
    public static final IntPref AnalyzerX = new IntPref("AnalyzerX", 0, -1, 65535);
 
@@ -390,21 +393,21 @@ public class A4Preferences {
       /** Returns the human-readable label for this enum value. */
       @Override public final String toString() { return label; }
    }
-   
-   public static Pref<?>[] nonUserPrefs = new Pref<?>[] { 
+
+   public static Pref<?>[] nonUserPrefs = new Pref<?>[] {
        AnalyzerX, AnalyzerHeight, AnalyzerWidth, AnalyzerY, Model0, Model1, Model2, Model3 };
-   
+
    public static List<Pref<?>> allPrefs() {
       List<Pref<?>> ans = new ArrayList<A4Preferences.Pref<?>>();
       Class<A4Preferences> self = A4Preferences.class;
       for (Field f : self.getDeclaredFields()) {
          if (Pref.class.isAssignableFrom(f.getType())) {
-            try { ans.add((Pref<?>) f.get(self)); } catch (Exception e) {} 
+            try { ans.add((Pref<?>) f.get(self)); } catch (Exception e) {}
          }
       }
       return ans;
    };
-   
+
    public static List<Pref<?>> allUserPrefs() {
        List<Pref<?>> ans = allPrefs();
        for (Pref<?> p: nonUserPrefs) ans.remove(p);

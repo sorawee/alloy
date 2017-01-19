@@ -124,7 +124,7 @@ public final class A4Options implements Serializable {
 
     /** Constructs an A4Options object with default values for everything. */
     public A4Options() { }
-    
+
     public boolean inferPartialInstance = true;
 
     /** This option specifies the amount of symmetry breaking to do (when symmetry breaking isn't explicitly disabled).
@@ -184,6 +184,9 @@ public final class A4Options implements Serializable {
     /** This option constrols how deep we unroll loops and unroll recursive predicate/function/macros (negative means it's disallowed) */
     public int unrolls = (-1);
 
+    /** This option specifies the seed for random name generation */
+    public int seed = 0;
+
     /** This method makes a copy of this Options object. */
     public A4Options dup() {
         A4Options x = new A4Options();
@@ -199,6 +202,7 @@ public final class A4Options implements Serializable {
         x.recordKodkod = recordKodkod;
         x.noOverflow = noOverflow;
         x.coreGranularity = coreGranularity;
+        x.seed = seed;
         return x;
     }
 }

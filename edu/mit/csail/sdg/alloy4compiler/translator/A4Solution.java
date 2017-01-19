@@ -30,12 +30,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Random;
 
 import kodkod.ast.BinaryExpression;
 import kodkod.ast.BinaryFormula;
@@ -203,6 +205,10 @@ public final class A4Solution {
     /** The map from each Kodkod Variable to an Alloy Type and Alloy Pos. */
     private Map<Variable,Pair<Type,Pos>> decl2type;
 
+    private HashMap<String, String> mapnames = new HashMap<String, String>();
+    private HashSet<String> setnames = new HashSet<String>();
+    private Random rnd;
+
     //===================================================================================================//
 
     /** Construct a blank A4Solution containing just UNIV, SIGINT, SEQIDX, STRING, and NONE as its only known sigs.
@@ -303,6 +309,7 @@ public final class A4Solution {
         solver.options().setSkolemDepth(opt.skolemDepth);
         solver.options().setBitwidth(bitwidth > 0 ? bitwidth : (int) Math.ceil(Math.log(atoms.size())) + 1);
         solver.options().setIntEncoding(Options.IntEncoding.TWOSCOMPLEMENT);
+        this.rnd = new Random(opt.seed);
      }
 
     /** Construct a new A4Solution that is the continuation of the old one, but with the "next" instance. */
@@ -416,6 +423,7 @@ public final class A4Solution {
      */
     Relation addRel(String label, TupleSet lower, TupleSet upper) throws ErrorFatal {
        if (solved) throw new ErrorFatal("Cannot add a Kodkod relation since solve() has completed.");
+       label = getNewLabel(label);
        Relation rel = Relation.nary(label, upper.arity());
        if (lower == upper) {
           bounds.boundExactly(rel, upper);
@@ -426,6 +434,25 @@ public final class A4Solution {
           bounds.bound(rel, lower, upper);
        }
        return rel;
+    }
+
+    private String getNewLabel(String label) {
+      if (label.startsWith("this/")) {
+        if (mapnames.containsKey(label)) {
+          return mapnames.get(label);
+        }
+        String genname = "";
+        do {
+          long val = rnd.nextLong();
+          if (val < 0) val *= -1;
+          genname = String.valueOf(val);
+        } while (setnames.contains(genname));
+
+        String newlabel = "this/" + genname + "_" + label;
+        mapnames.put(label, newlabel);
+        return newlabel;
+      }
+      return label;
     }
 
     /** Add a new sig to this solution and associate it with the given expression (and if s.isTopLevel then add this expression into Sig.UNIV).

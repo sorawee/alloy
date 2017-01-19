@@ -33,6 +33,7 @@ import static edu.mit.csail.sdg.alloy4.A4Preferences.Model1;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.Model2;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.Model3;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.NoOverflow;
+import static edu.mit.csail.sdg.alloy4.A4Preferences.Seed;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.RecordKodkod;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.SkolemDepth;
 import static edu.mit.csail.sdg.alloy4.A4Preferences.Solver;
@@ -961,6 +962,7 @@ public final class SimpleGUI implements ComponentListener, Listener {
         opt.solverDirectory = alloyHome() + fs + "binary";
         opt.recordKodkod = RecordKodkod.get();
         opt.noOverflow = NoOverflow.get();
+        opt.seed = Seed.get();
         opt.unrolls = Version.experimental ? Unrolls.get() : (-1);
         opt.skolemDepth = SkolemDepth.get();
         opt.coreMinimization = CoreMinimization.get();
@@ -1179,6 +1181,7 @@ public final class SimpleGUI implements ComponentListener, Listener {
             if (Version.experimental) {
               addToMenu(optmenu, Unrolls);
               addToMenu(optmenu, ImplicitThis, NoOverflow, InferPartialInstance);
+              addToMenu(optmenu, Seed);
             }
 
         } finally {
@@ -1186,7 +1189,7 @@ public final class SimpleGUI implements ComponentListener, Listener {
         }
         return null;
     }
-    
+
     private Runner doOptFontname() {
         if (wrap) return wrapMe();
         int size=FontSize.get();
